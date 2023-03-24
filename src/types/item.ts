@@ -7,4 +7,6 @@ export interface IItem{
     discount?: number,
     price: number,
     rating?: number,
+    count: number;
+    countInCart:number;
 }

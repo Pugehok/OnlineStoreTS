@@ -15,6 +15,7 @@ export const CartComponent: React.FC<ICart> = (props: ICart) => {
       <li>
         <p>{item.avatar}</p>
         <span>{item.price}</span>
+        <p>У вас в корзине {item.countInCart}</p>
         <button>Удалить из корзины</button>
       </li>
     );

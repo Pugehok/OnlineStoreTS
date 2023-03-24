@@ -12,14 +12,11 @@ interface ICart {
 
 export const NavBar: React.FC<ICart> = (props: ICart) => {
   const { items, status, toggleCart, removeItem } = props;
+
   const totalprice = (): number => {
-    let counter: number = 0;
-
-    for (let i = 0; i < items.length; i++) {
-      counter += items[i].price;
-    }
-
-    return counter;
+    return items.reduce((accamulate, item) => {
+      return accamulate + item.price * item.countInCart;
+    }, 0);
   };
 
   return (

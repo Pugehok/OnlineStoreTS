@@ -11,6 +11,8 @@ const products: Array<IItem> = [
     category: 'Бытовая техника',
     price: 6000,
     rating: 5,
+    count: 10,
+    countInCart: 1,
   },
   {
     id: 2,
@@ -20,10 +22,12 @@ const products: Array<IItem> = [
     category: 'Ноутбуки',
     discount: 5000,
     price: 120000,
+    count: 6,
+    countInCart: 1,
   },
 ];
 
-export const App: React.FC = () => {
+export const App = () => {
   const [isOpenCart, setToggleCart] = useState<boolean>(false);
   const [items, setItems] = useState<IItem[]>([]);
   const [itemsInCart, setInCart] = useState<IItem[]>([]);
@@ -32,8 +36,16 @@ export const App: React.FC = () => {
   }, []);
 
   const addToCart = (id: number): void => {
-    const arr: Array<IItem> | undefined = items.filter((item) => item.id === id);
-    if (arr) setInCart([...itemsInCart, ...arr]);
+    const item = itemsInCart.find((item) => item.id === id);
+    if (item) {
+      const index = itemsInCart.indexOf(item);
+      const coppyArr: IItem[] = [...itemsInCart];
+      coppyArr[index].countInCart += 1;
+      setInCart([...coppyArr]);
+    } else {
+      const arr: Array<IItem> | undefined = items.filter((item) => item.id === id);
+      if (arr) setInCart([...itemsInCart, ...arr]);
+    }
   };
 
   const toggleCart = (): void => {
