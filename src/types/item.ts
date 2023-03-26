@@ -5,8 +5,8 @@ export interface IItem{
     discription: string,
     category: string,
     discount?: number,
+    countInCart: number,
     price: number,
     rating?: number,
     count: number;
-    countInCart:number;
 }

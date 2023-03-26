@@ -2,7 +2,7 @@ import { IItem } from '../types/item';
 import { NavBar } from './Navbar/Navbar';
 import { ItemsList } from './ItemsList/ItemsList';
 import { useState, useEffect, useRef } from 'react';
-const products: Array<IItem> = [
+const products: IItem[] = [
   {
     id: 1,
     title: 'Стиральная машинка',
@@ -52,7 +52,24 @@ export const App = () => {
     setToggleCart(!isOpenCart);
   };
 
-  const removeItem = (id: number): void => {};
+  const removeItem = (id: number): void => {
+    const item = itemsInCart.find((item) => item.id === id);
+
+    if (item && item.countInCart >= 2) {
+      const index: number = itemsInCart.indexOf(item);
+      const coppyArr: IItem[] = [...itemsInCart];
+      coppyArr[index].countInCart -= 1;
+      setInCart([...coppyArr]);
+    }
+
+    if (item && item.countInCart === 1) {
+      const index: number = itemsInCart.indexOf(item);
+      const coppyArr: IItem[] = [...itemsInCart];
+      coppyArr.splice(index, 1);
+      console.log(index, coppyArr);
+      setInCart([...coppyArr]);
+    }
+  };
 
   return (
     <div>

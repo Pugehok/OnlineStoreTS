@@ -37,6 +37,7 @@ export const NavBar: React.FC<ICart> = (props: ICart) => {
       <h1>LOGO</h1>
       <textarea placeholder="Поиск" name=""></textarea>
       <CartComponent
+        removeItem={removeItem}
         items={items}
         status={status}
         handlerStatus={toggleCart}
