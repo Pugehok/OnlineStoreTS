@@ -19,6 +19,12 @@ export const NavBar: React.FC<ICart> = (props: ICart) => {
     }, 0);
   };
 
+  const countItemesInCart = (): number => {
+    return items.reduce((accamulate, item) => {
+      return accamulate + item.countInCart;
+    }, 0);
+  };
+
   return (
     <div
       style={{
@@ -35,6 +41,7 @@ export const NavBar: React.FC<ICart> = (props: ICart) => {
         status={status}
         handlerStatus={toggleCart}
         totalprice={totalprice()}
+        countItemesInCart={countItemesInCart()}
       />
     </div>
   );

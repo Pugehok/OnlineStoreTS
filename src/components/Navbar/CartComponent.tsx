@@ -4,11 +4,12 @@ interface ICart {
   items: IItem[];
   status: boolean;
   handlerStatus: () => void;
+  countItemesInCart: number;
   totalprice: number;
 }
 
 export const CartComponent: React.FC<ICart> = (props: ICart) => {
-  const { items, status, handlerStatus, totalprice } = props;
+  const { items, countItemesInCart, status, handlerStatus, totalprice } = props;
 
   const itemsList: any = items.map((item) => {
     return (
@@ -26,7 +27,7 @@ export const CartComponent: React.FC<ICart> = (props: ICart) => {
       {status ? (
         <div>
           <span>cart</span>
-          <p>{items.length}</p>
+          <p>{countItemesInCart}</p>
         </div>
       ) : (
         <div style={{ marginTop: '240px', border: '1px solid black' }}>
