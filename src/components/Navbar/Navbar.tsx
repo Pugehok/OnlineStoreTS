@@ -1,6 +1,6 @@
 import * as styles from './Navbar.module.css';
 import { CartComponent } from './CartComponent';
-
+import { useRef, useState } from 'react';
 import { IItem } from '../../types/item';
 
 interface ICart {
@@ -8,11 +8,11 @@ interface ICart {
   status: boolean;
   toggleCart: () => void;
   removeItem: (id: number) => void;
+  filterCategory: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const NavBar: React.FC<ICart> = (props: ICart) => {
-  const { items, status, toggleCart, removeItem } = props;
-
+  const { items, status, filterCategory, toggleCart, removeItem } = props;
   const totalprice = (): number => {
     return items.reduce((accamulate, item) => {
       return accamulate + item.price * item.countInCart;
@@ -35,7 +35,7 @@ export const NavBar: React.FC<ICart> = (props: ICart) => {
       }}
     >
       <h1>LOGO</h1>
-      <textarea placeholder="Поиск" name=""></textarea>
+      <input placeholder="Поиск по категориям" name="" onChange={filterCategory}></input>
       <CartComponent
         removeItem={removeItem}
         items={items}

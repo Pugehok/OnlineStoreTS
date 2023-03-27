@@ -31,8 +31,10 @@ export const App = () => {
   const [isOpenCart, setToggleCart] = useState<boolean>(false);
   const [items, setItems] = useState<IItem[]>([]);
   const [itemsInCart, setInCart] = useState<IItem[]>([]);
+  const [filtredItems, setfiltredItems] = useState<IItem[]>([]);
   useEffect(() => {
     setItems(products);
+    setfiltredItems(products);
   }, []);
 
   const addToCart = (id: number): void => {
@@ -71,6 +73,22 @@ export const App = () => {
     }
   };
 
+  const filterCategory: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (e.target.value.length > 2) {
+      const filtredItemsOnCategory: IItem[] | undefined = items.filter((obj) =>
+        obj.category.toLocaleLowerCase().includes(e.target.value.toLowerCase()),
+      );
+      const filtredItemsOnTitle: IItem[] | undefined = items.filter((obj) =>
+        obj.title.toLocaleLowerCase().includes(e.target.value.toLowerCase()),
+      );
+      filtredItemsOnCategory.length > filtredItemsOnTitle.length
+        ? setfiltredItems([...filtredItemsOnCategory])
+        : setfiltredItems([...filtredItemsOnTitle]);
+    } else {
+      setfiltredItems([...items]);
+    }
+  };
+
   return (
     <div>
       <header>
@@ -79,10 +97,11 @@ export const App = () => {
           items={itemsInCart}
           toggleCart={toggleCart}
           removeItem={removeItem}
+          filterCategory={filterCategory}
         />
       </header>
       <section>
-        <ItemsList items={items} addToCart={addToCart} />
+        <ItemsList items={filtredItems} addToCart={addToCart} />
       </section>
     </div>
   );
