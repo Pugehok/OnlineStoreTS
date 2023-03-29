@@ -2,6 +2,7 @@ import { IItem } from '../types/item';
 import { NavBar } from './Navbar/Navbar';
 import { ItemsList } from './ItemsList/ItemsList';
 import { useState, useEffect, useRef } from 'react';
+import { ModalComponent } from './ModalConfrim/ModalComponent';
 const products: IItem[] = [
   {
     id: 1,
@@ -30,6 +31,7 @@ const products: IItem[] = [
 export const App = () => {
   const [isOpenCart, setToggleCart] = useState<boolean>(false);
   const [items, setItems] = useState<IItem[]>([]);
+  const [isConfrimedModal, setisConfrimedModal] = useState<boolean>(false);
   const [itemsInCart, setInCart] = useState<IItem[]>([]);
   const [filtredItems, setfiltredItems] = useState<IItem[]>([]);
   useEffect(() => {
@@ -52,6 +54,10 @@ export const App = () => {
 
   const toggleCart = (): void => {
     setToggleCart(!isOpenCart);
+  };
+
+  const toggleModal = (): void => {
+    setisConfrimedModal(!isConfrimedModal);
   };
 
   const removeItem = (id: number): void => {
@@ -91,18 +97,25 @@ export const App = () => {
 
   return (
     <div>
-      <header>
-        <NavBar
-          status={isOpenCart}
-          items={itemsInCart}
-          toggleCart={toggleCart}
-          removeItem={removeItem}
-          filterCategory={filterCategory}
-        />
-      </header>
-      <section>
-        <ItemsList items={filtredItems} addToCart={addToCart} />
-      </section>
+      {isConfrimedModal ? (
+        <ModalComponent handlerStatus={toggleModal} />
+      ) : (
+        <div>
+          <header>
+            <NavBar
+              status={isOpenCart}
+              items={itemsInCart}
+              toggleCart={toggleCart}
+              removeItem={removeItem}
+              filterCategory={filterCategory}
+              modalHandler={toggleModal}
+            />
+          </header>
+          <section>
+            <ItemsList items={filtredItems} addToCart={addToCart} />
+          </section>
+        </div>
+      )}
     </div>
   );
 };

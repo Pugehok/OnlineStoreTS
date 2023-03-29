@@ -9,10 +9,11 @@ interface ICart {
   toggleCart: () => void;
   removeItem: (id: number) => void;
   filterCategory: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  modalHandler: () => void;
 }
 
 export const NavBar: React.FC<ICart> = (props: ICart) => {
-  const { items, status, filterCategory, toggleCart, removeItem } = props;
+  const { items, status, filterCategory, toggleCart, removeItem, modalHandler } = props;
   const totalprice = (): number => {
     return items.reduce((accamulate, item) => {
       return accamulate + item.price * item.countInCart;
@@ -42,6 +43,7 @@ export const NavBar: React.FC<ICart> = (props: ICart) => {
         status={status}
         handlerStatus={toggleCart}
         totalprice={totalprice()}
+        modalHandler={modalHandler}
         countItemesInCart={countItemesInCart()}
       />
     </div>

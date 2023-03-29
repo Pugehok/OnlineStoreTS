@@ -1,5 +1,5 @@
 import { IItem } from '../../types/item';
-
+import { useState } from 'react';
 interface ICart {
   items: IItem[];
   status: boolean;
@@ -7,10 +7,12 @@ interface ICart {
   countItemesInCart: number;
   totalprice: number;
   removeItem: (id: number) => void;
+  modalHandler: () => void;
 }
 
 export const CartComponent: React.FC<ICart> = (props: ICart) => {
-  const { items, removeItem, countItemesInCart, status, handlerStatus, totalprice } = props;
+  const { items, removeItem, countItemesInCart, status, handlerStatus, modalHandler, totalprice } =
+    props;
 
   const itemsList: any = items.map((item) => {
     return (
@@ -31,10 +33,21 @@ export const CartComponent: React.FC<ICart> = (props: ICart) => {
           <p>{countItemesInCart}</p>
         </div>
       ) : (
-        <div style={{ marginTop: '240px', border: '1px solid black' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: '240px',
+            border: '1px solid black',
+            alignItems: 'center',
+          }}
+        >
           <ul style={{ display: 'flex', flexDirection: 'column' }}>{itemsList}</ul>
           <h2>Total Price: {totalprice}</h2>
-          <span onClick={() => handlerStatus()}>Закрыть корзину</span>
+          {items.length >= 1 ? <button onClick={() => modalHandler()}>Оформить заказ</button> : ''}
+          <span onClick={() => handlerStatus()} style={{ marginTop: '20px' }}>
+            Закрыть корзину
+          </span>
         </div>
       )}
     </div>
