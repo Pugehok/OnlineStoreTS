@@ -10,3 +10,11 @@ export interface IItem{
     rating?: number,
     count: number;
 }
+
+export type formValues = {
+    firstName: string;
+    lastName: string;
+    adress: string;
+    numberphone: string;
+};
+  

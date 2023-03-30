@@ -1,9 +1,22 @@
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { formValues } from '../../types/item';
+
 interface IModal {
   handlerStatus: () => void;
 }
 
 export const ModalComponent = (props: IModal) => {
   const { handlerStatus } = props;
+  const { register, handleSubmit } = useForm<formValues>();
+  const onSubmit: SubmitHandler<formValues> = async (data) => {
+    let response = await fetch('/article/fetch/post/user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({ ...data }),
+    });
+  };
 
   return (
     <div
@@ -13,30 +26,38 @@ export const ModalComponent = (props: IModal) => {
         marginLeft: '20%',
       }}
     >
-      <a onClick={() => handlerStatus()} style={{ marginRight: '20px' }}>
-        x
-      </a>
-      <h1>Подтверждение заказа</h1>
-      <div style={{ display: 'flex', flexDirection: 'column', marginTop: '20%' }}>
-        <div>
-          <p>Ваше имя</p>
-          <input type="text" placeholder="Введите ваше имя" />
-        </div>
-        <div>
-          <p>Ваша фамилия</p>
-          <input type="text" placeholder="Введите вашу фамилию" />
-        </div>
-        <div>
-          {/* //! Со временм переработаем под карту */}
-          <p>Ваш адрес</p>
-          <input type="text" placeholder="Введите ваш адрес" />
-        </div>
-        <div>
-          <p>Ваш номер телефона </p>
-          <input type="tel" placeholder="Введите ваш номер телефона" />
-        </div>
-        <button style={{ marginTop: '20px' }}>Подветрдить заказ</button>
-      </div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          marginTop: '40px',
+          justifyContent: 'space-around',
+        }}
+      >
+        <a onClick={() => handlerStatus()}>Вернуться назад</a>
+        <input
+          style={{ marginBottom: '20px' }}
+          placeholder="Введите ваше имя"
+          {...register('firstName')}
+        />
+        <input
+          style={{ marginBottom: '20px' }}
+          placeholder="Введите вашу фамилию"
+          {...register('lastName')}
+        />
+        <input
+          style={{ marginBottom: '20px' }}
+          placeholder="Введите ваш номер телефона"
+          {...register('numberphone')}
+        />
+        <input
+          style={{ marginBottom: '20px' }}
+          placeholder="Введише ваш адресс"
+          {...register('adress')}
+        />
+        <input type="submit" />
+      </form>
     </div>
   );
 };

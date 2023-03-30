@@ -3,6 +3,8 @@ import { NavBar } from './Navbar/Navbar';
 import { ItemsList } from './ItemsList/ItemsList';
 import { useState, useEffect, useRef } from 'react';
 import { ModalComponent } from './ModalConfrim/ModalComponent';
+import { formValues } from '../types/item';
+
 const products: IItem[] = [
   {
     id: 1,
@@ -34,6 +36,7 @@ export const App = () => {
   const [isConfrimedModal, setisConfrimedModal] = useState<boolean>(false);
   const [itemsInCart, setInCart] = useState<IItem[]>([]);
   const [filtredItems, setfiltredItems] = useState<IItem[]>([]);
+
   useEffect(() => {
     setItems(products);
     setfiltredItems(products);
